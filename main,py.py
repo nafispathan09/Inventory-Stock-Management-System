@@ -61,6 +61,67 @@ def search_product(products):
     if found==False:
         print("product not found !!!!!")
 
+def update_product(products):
+    print("Welcome to the update product function ")
+    found=False 
+    choice=int(input("Enter a prduct id for update a product .. :- "))
+
+    for product in products :
+        if choice==product["Id"]:
+            found=True
+            con=input("Press 'ENTER' for update "+choice+" Product 'n' for exit ").lower()
+            if con=="n":
+                return 
+            new_name=input("Enter new name         :-")
+            new_id=int(input("enter new product id     :- "))
+            new_price=int(input("enter new price       :- "))
+            new_quentity=int(input("enter new quentity :- "))
+            new_categary=input("enter new categary :- ")
+            new_supplier=input("enter new supplier :- ")
+
+            product["Name"]=new_name
+            product["Id"]=new_id
+            product["Price"]=new_price
+            product["Quentity"]=new_quentity
+            product["Supplier"]=new_supplier 
+            product["Categary"]-new_categary 
+
+
+    if found==False:
+        print("Student not dound !!!!!!")
+
+
+
+def delete_student(products):
+    print("welcome to the deleate student function ")
+    found=False
+    choice=int(input("Enter a product id for deleate student "))
+    for product in products :
+        if choice==product["Id"]:
+            found=True
+            print("product found ")
+            con=input("press 'ENTER' for deleate id no "+choice+"product 'n' for EXIT").lower()
+            if con=="n":
+                products.remove(product)
+                print("successfully deleated product ")
+    if found==False:
+        print("Student didnt found !!!")
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -68,11 +129,11 @@ def search_product(products):
 print("---------------------INVENTRY STOCK MANAGEMENT ----------------------")
 while True:
 
-    print("enter 1 for add product \\enter 2 for show all products \\3 for search product" \
-    "\\4 for EXIT ")
+    print("enter 1 for add product \nenter 2 for show all products \n3 for search product" \
+    "\n4 for update product\n5 for delete student \n9 for EXIT ")
 
     choice=int(input("enter a choice ......"))
-    if choice==4:
+    if choice==9:
         break 
     elif choice==1 :
         add_product()
