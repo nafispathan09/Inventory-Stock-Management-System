@@ -1,12 +1,4 @@
 products=[]
-sample_dict1={"PRODUCT ID ":123,"PRICE ":789,"SUPPLIER":"","NAME":"",
-             "QUENTITY":13,"CATEGARY":"",}
-sample_dict2={"PRODUCT ID ":13,"PRICE ":9,"SUPPLIER":"","NAME":"",
-             "QUENTITY":143,"CATEGARY":"",}
-sample_dict3={"PRODUCT ID ":124,"PRICE ":79,"SUPPLIER":"","NAME":"",
-             "QUENTITY":153,"CATEGARY":"",}
-
-
 
 
 def add_product():
@@ -205,40 +197,150 @@ def delete_student(products):
         print("Student didnt found !!!")
                 
 
+def add_stock(products):
+    print("welcome to add stock function ")
+    while True:
+        id=int(input("enter product id for add stock  .... "))
+        found=False
+        for product in products :
+            if product["Id"]==id:
+                found=True
+                print("product found ")
+                print("product name is ",product["Name"])
+                new_stock=int(input("enter quentity of new stock "))
+                print("current stock = ",product["Quentity"])
+                print("added stock = ", new_stock)
+                product["Quentity"]+=new_stock
+                print("new stock = ",product["Quentity"])
+                break
+        if found!=True:
+            print("invalid id or product not found !!!! ")
 
+def sell_product(products):
+    print("welcome to the sell prdict function ")
+    found=False
+    while True:
+        try:
+            id=int(input("enter product id for sell product : "))
+            break 
+        except ValueError:
+            print("invalid input try again !!!!! ")
 
+    
+    for product in products :
+        if product["Id"]==id:
+            found=True
+            print("product found ")
+            while True:
+                try:
+                    sell=int(input("enter number of quentity for sell :  "))
+                    break
+                except ValueError:
+                    print("invalid input \ninput must be in integer formate !!!!!!!! ")
 
+            
+            if product["Quentity"]>=sell:
+                print("the sell is valid !!! ")
+            else:
+                print("invalid quentity for sell ")
+            product["Quentity"]-=sell
+            print("after sell available stock is ",product["Quentity"])
 
+    if found==False:
+        print("invalid id or product didnt found !!!!! ")
+
+def low_stock_report(products):
+    found=False
+    print("Welcome to the low stock reprt function ")
+    print("low stock product list is >>>  ")
+    for  product in products :
+        if product["Quentity"]<=5:
+            found=True
+            print("name:- ",product["Name"],"product_id :- ",product["Id"],"Quentity :- ",product["Quentity"])
+    if found!=True:
+        print("Empty !!!!!!!! ")
 
 
 
 
 print("---------------------INVENTRY STOCK MANAGEMENT ----------------------")
-while True:
-
-    print("enter 1 for add product \nenter 2 for show all products \n3 for search product" \
-    "\n4 for update product\n5 for delete student \n9 for EXIT ")
+def product_management():
     while True:
+
+        print("enter 1 for add product \nenter 2 for show all products \n3 for search product" \
+        "\n4 for update product\n5 for delete student \n9 for EXIT ")
+        while True:
+            try:
+                choice=int(input("enter a choice ......"))
+                break
+            except ValueError:
+                print("Enter choice in int formate \ninvalid choice ")
+
+        if choice==9:
+            break 
+        elif choice==1 :
+            add_product()
+        elif choice==2:
+            show_product(products)
+        elif choice==3:
+            search_product(products)
+        elif choice==4:
+            update_product(products)
+        elif choice==5:
+            delete_student(products)
+        else:
+            print("invalid choice please enter valid choice again ")
+
+def stock_managent():
+    print("Welcomet to the stock management function !!!!!! ")
+   
+    while True :
+        print("1 for add stock \n2 for sale stock\n3 for show low stack report !!  7 for exit ")
+        while True:
+            try:
+                choice=int(input("enter your choice .......  "))
+                break
+            except ValueError:
+                print("invalid input \ninput must be integer number !!!!! ")
+        if choice==7:
+            print("thanks for chosing us .. ")
+            break 
+        elif choice==1:
+            add_stock(products)
+        elif choice==2:
+            sell_product(products)
+        elif choice==3:
+            low_stock_report(products )
+        else:
+            print("enter valid input\nyour choice is not valid !!!!! ")
+
+while True:
+    while True:
+
         try:
-            choice=int(input("enter a choice ......"))
+            choice=int(input("enter a choice ........\n1 for PRODUCT MANAGEMENT \n2 for STOCK MANAGEMENT" \
+            "\n3for exit  "))
             break
         except ValueError:
-            print("Enter choice in int formate \ninvalid choice ")
-            
-    if choice==9:
+            print("invalid input enter a integer choice !!!!!!! ")
+    if choice==3:
+        print("thanks for your time .... ")
         break 
-    elif choice==1 :
-        add_product()
+    elif choice==1:
+        product_management()
     elif choice==2:
-        show_product(products)
-    elif choice==3:
-        search_product(products)
-    elif choice==4:
-        update_product(products)
-    elif choice==5:
-        delete_student(products)
+        stock_managent()
     else:
-        print("invalid choice please enter valid choice again ")
+        print("invalid input please try again !!!!!!!!!!   ")
+
+    
+    
+
+
+
+
+
+
 
 
 
