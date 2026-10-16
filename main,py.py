@@ -1,4 +1,4 @@
-products=[]
+import json 
 
 
 def add_product():
@@ -77,14 +77,13 @@ def add_product():
         product={"Name":name,"Id":pro_id,"Price":price,"Quantity":quentity
                  ,"Categary":categary,"Supplier":supplier}
         products.append(product)
+        save_products(products)
 
 
 
         agian=input("press ''ENTER fot other entry 'n' for exit  " ).lower()
         if agian =="n":
             break 
-
-
 def show_product(products):
     print()
     print("welcome to the show product functiion ")
@@ -97,8 +96,6 @@ def show_product(products):
         print("quantity",product["Quantity"])
         print("categary ",product["Categary"])
         print("supplier",product["Supplier"])
-
-
 def search_product(products):
     print("welcome to the product search function ")
     found=False
@@ -125,7 +122,6 @@ def search_product(products):
             print("supplier",product["Supplier"])
     if found==False:
         print("product not found !!!!!")
-
 def update_product(products):
     print("Welcome to the update product function ")
     found=False 
@@ -140,9 +136,7 @@ def update_product(products):
         except ValueError:
             print("product id must be positive int ")
 
-            
-
-    
+                
 
     for product in products :
         if choice==product["Id"]:
@@ -163,13 +157,10 @@ def update_product(products):
             product["Quentity"]=new_quentity
             product["Supplier"]=new_supplier 
             product["Categary"]-new_categary 
-
+    save_products()
 
     if found==False:
         print("Student not dound !!!!!!")
-
-
-
 def delete_student(products):
     print("welcome to the deleate product function ")
     found=False
@@ -195,8 +186,7 @@ def delete_student(products):
                 print("successfully deleated product ")
     if found==False:
         print("Student didnt found !!!")
-                
-
+    save_products(products)
 def add_stock(products):
     print("welcome to add stock function ")
     while True:
@@ -215,7 +205,7 @@ def add_stock(products):
                 break
         if found!=True:
             print("invalid id or product not found !!!! ")
-
+        save_products(products)
 def sell_product(products):
     print("welcome to the sell prdict function ")
     found=False
@@ -248,6 +238,8 @@ def sell_product(products):
 
     if found==False:
         print("invalid id or product didnt found !!!!! ")
+    save_products(products)
+
 
 def low_stock_report(products):
     found=False
@@ -259,9 +251,6 @@ def low_stock_report(products):
             print("name:- ",product["Name"],"product_id :- ",product["Id"],"Quentity :- ",product["Quentity"])
     if found!=True:
         print("Empty !!!!!!!! ")
-
-
-
 def inventry_statistics(products):
     total_product=0
     total_quentity=0
@@ -287,7 +276,6 @@ def inventry_statistics(products):
     print("average cost of a product is :- ",for_average/total_product)
     print("the most expensive product is :-" ,most_expensive)
     print("the chepest product is :- ",chepest)
-
 def inventry_vlaue(products):
     print("welcome to the inventry management system statestics function ")
     if len(products)==0:
@@ -305,15 +293,26 @@ def inventry_vlaue(products):
     print("The grand total of the whole inventry is :-- ",grand_total)
 
 
+def save_products(products):
+    with open("data/inventory.json","w") as file:
+        json.dump(products,file)       
+def load_products():
+    try:
+        with open("data/inventory.json","r") as file:
+          products=json.load(file)
+        return products
+    
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        return []
 
-
-
-
-
-
-
+    
 print("---------------------INVENTRY STOCK MANAGEMENT ----------------------")
-def product_management():
+products=load_products()
+
+
+def product_management(products):
     while True:
 
         print("enter 1 for add product \nenter 2 for show all products \n3 for search product" \
@@ -326,7 +325,11 @@ def product_management():
                 print("Enter choice in int formate \ninvalid choice ")
 
         if choice==9:
+            with open ("inventy.json","w")as file:
+                json.dump(products)
             break 
+
+
         elif choice==1 :
             add_product()
         elif choice==2:
@@ -339,7 +342,6 @@ def product_management():
             delete_student(products)
         else:
             print("invalid choice please enter valid choice again ")
-
 def stock_managent():
     print("Welcomet to the stock management function !!!!!! ")
    
@@ -353,7 +355,12 @@ def stock_managent():
                 print("invalid input \ninput must be integer number !!!!! ")
         if choice==7:
             print("thanks for chosing us .. ")
+
+            with open ("inventy.json","w")as file:
+              json.dump(products)
             break 
+
+
         elif choice==1:
             add_stock(products)
         elif choice==2:
@@ -362,7 +369,6 @@ def stock_managent():
             low_stock_report(products )
         else:
             print("enter valid input\nyour choice is not valid !!!!! ")
-
 def statistics_report():
     while True:
         print("Enter 1 for inventry statistics \n2for inventry value \n3 for exit")
@@ -383,8 +389,6 @@ def statistics_report():
             print("invalid input try agin !!!! ")
             print()
 
-
-
     
 while True:
     while True:
@@ -399,10 +403,10 @@ while True:
         print("thanks for your time .... ")
         break 
     elif choice==1:
-        product_management()
+        product_management(products)
     elif choice==2:
         stock_managent()
-    elif choice==4:
+    elif choice==4: 
         statistics_report()
 
     else:
@@ -410,7 +414,6 @@ while True:
 
     
     
-
 
 
 
