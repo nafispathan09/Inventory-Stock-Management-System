@@ -1,7 +1,7 @@
 # inventry 
 
 import storage as file
-products=file.load_products
+products=file.load_products()
 
 def add_product(products):
     print("welcome to add product function ")
@@ -99,32 +99,6 @@ def show_product(products):
         print("quantity",product["Quantity"])
         print("categary ",product["Categary"])
         print("supplier",product["Supplier"])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def search_product(products):
     print("welcome to the product search function ")
     found=False
@@ -157,7 +131,7 @@ def update_product(products):
     while True:
         try:
             choice=int(input("Enter a prduct id for update a product .. :- "))
-            if choice>=0:
+            if choice<=0:
                 print("product id must be positive and non zero !!!")
                 continue
             else:
@@ -169,9 +143,10 @@ def update_product(products):
 
     for product in products :
         if choice==product["Id"]:
+            str_choice=str(choice)
             found=True
-            con=input("Press 'ENTER' for update "+choice+" Product 'n' for exit ").lower()
-            if con=="n":
+            confirm=input("Press 'ENTER' for update "+str_choice+" Product 'n' for exit ").lower()
+            if confirm=="n":
                 return 
             new_name=input("Enter new name         :-")
             new_id=int(input("enter new product id     :- "))
@@ -183,10 +158,10 @@ def update_product(products):
             product["Name"]=new_name
             product["Id"]=new_id
             product["Price"]=new_price
-            product["Quentity"]=new_quentity
+            product["Quantity"]=new_quentity
             product["Supplier"]=new_supplier 
-            product["Categary"]-new_categary 
-    file.save_products()
+            product["Categary"]=new_categary 
+    file.save_products(products)
 
     if found==False:
         print("Student not dound !!!!!!")
@@ -196,7 +171,7 @@ def delete_student(products):
     while True:
         try:
             choice=int(input("Enter a product id for deleate student "))
-            if choice>=0:
+            if choice<=0:
                 print("prododuct id cannot be negative nor zero ")
                 continue
             else:
@@ -207,67 +182,118 @@ def delete_student(products):
     
     for product in products :
         if choice==product["Id"]:
+            str_choice=str(choice)
             found=True
             print("product found ")
-            con=input("press 'ENTER' for deleate id no "+choice+"product 'n' for EXIT").lower()
-            if con=="n":
+            con=input("press 'ENTER' for deleate id no "+str_choice+"product 'n' for EXIT").lower()
+            if con!="n":
                 products.remove(product)
                 print("successfully deleated product ")
+                file.save_products(products)
+
+            else:
+                return 
     if found==False:
         print("Student didnt found !!!")
-    file.save_products(products)
+    
+
+
+
+
+
+
 
 
 def add_stock(products):
     print("welcome to add stock function ")
     while True:
-        id=int(input("enter product id for add stock  .... "))
+        while True:
+            try:
+                id=int(input("enter product id for add stock  .... "))
+                if id<=0:
+                    print("id cant be nagative nor zero try agian !!!  ")
+                    pass
+                else:
+                    break
+            except ValueError:
+                print("only excepts positive integer values   ")
+    
         found=False
         for product in products :
             if product["Id"]==id:
                 found=True
                 print("product found ")
                 print("product name is ",product["Name"])
-                new_stock=int(input("enter quentity of new stock "))
-                print("current stock = ",product["Quentity"])
+
+                while True:
+                    try:
+                        new_stock=int(input("enter quantity of new stock "))
+                        if new_stock<=0:
+                            print("the quantity must be positive ")
+                           
+                        else:
+                            break
+                    except ValueError:
+                        print("enter positive integer number ")
+
+                print("current stock = ",product["Quantity"])
                 print("added stock = ", new_stock)
-                product["Quentity"]+=new_stock
-                print("new stock = ",product["Quentity"])
+                product["Quantity"]+=new_stock
+                print("new stock = ",product["Quantity"])
                 break
         if found!=True:
             print("invalid id or product not found !!!! ")
+           
         file.save_products(products)
+        return
+
+
+
+
+
+
+
+
 def sell_product(products):
     print("welcome to the sell prdict function ")
     found=False
     while True:
         try:
             id=int(input("enter product id for sell product : "))
-            break 
+            if id<=0:
+                print("the Id cant be nagetive nor zero !!!!! ")
+                pass
+            else:
+                break 
         except ValueError:
             print("invalid input try again !!!!! ")
 
-    
     for product in products :
         if product["Id"]==id:
             found=True
             print("product found ")
             while True:
                 try:
-                    sell=int(input("enter number of quentity for sell :  "))
-                    break
+                    sell=int(input("enter number of quantity for sell :  "))
+                    if sell<=0:
+                        print("sell cant be nagative nor zero !!!!! ")
+                        pass
+                    else:
+                        break
+                    
                 except ValueError:
                     print("invalid input \ninput must be in integer formate !!!!!!!! ")
 
             
-            if product["Quentity"]>=sell:
+            if product["Quantity"]>=sell:
                 print("the sell is valid !!! ")
+                product["Quantity"]-=sell
+                file.save_products(products)
+
             else:
-                print("invalid quentity for sell ")
-            product["Quentity"]-=sell
-            print("after sell available stock is ",product["Quentity"])
+                print("invalid quantity for sell ")
+            print("after sell available stock is ",product["Quantity"])
 
     if found==False:
         print("invalid id or product didnt found !!!!! ")
-    file.save_products(products)
 
