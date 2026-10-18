@@ -1,5 +1,9 @@
 # inventry 
-def add_product():
+
+import storage as file
+products=file.load_products
+
+def add_product(products):
     print("welcome to add product function ")
     print()
     while True:
@@ -75,7 +79,7 @@ def add_product():
         product={"Name":name,"Id":pro_id,"Price":price,"Quantity":quentity
                  ,"Categary":categary,"Supplier":supplier}
         products.append(product)
-        save_products(products)
+        file.save_products(products)
 
 
 
@@ -85,8 +89,9 @@ def add_product():
 def show_product(products):
     print()
     print("welcome to the show product functiion ")
-    if products.len()==0:
+    if len(products)==0:
         print("the products in enventry is zero \nno prduct available !!!!!!!!!   ")
+        return
     for product in products:
         print("name",product["Name"])
         print("product id",product["Id"])
@@ -94,6 +99,32 @@ def show_product(products):
         print("quantity",product["Quantity"])
         print("categary ",product["Categary"])
         print("supplier",product["Supplier"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def search_product(products):
     print("welcome to the product search function ")
     found=False
@@ -155,7 +186,7 @@ def update_product(products):
             product["Quentity"]=new_quentity
             product["Supplier"]=new_supplier 
             product["Categary"]-new_categary 
-    save_products()
+    file.save_products()
 
     if found==False:
         print("Student not dound !!!!!!")
@@ -184,7 +215,9 @@ def delete_student(products):
                 print("successfully deleated product ")
     if found==False:
         print("Student didnt found !!!")
-    save_products(products)
+    file.save_products(products)
+
+
 def add_stock(products):
     print("welcome to add stock function ")
     while True:
@@ -203,7 +236,7 @@ def add_stock(products):
                 break
         if found!=True:
             print("invalid id or product not found !!!! ")
-        save_products(products)
+        file.save_products(products)
 def sell_product(products):
     print("welcome to the sell prdict function ")
     found=False
@@ -236,5 +269,5 @@ def sell_product(products):
 
     if found==False:
         print("invalid id or product didnt found !!!!! ")
-    save_products(products)
+    file.save_products(products)
 

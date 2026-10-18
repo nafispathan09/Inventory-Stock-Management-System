@@ -1,10 +1,14 @@
 # storage 
+# chaked no bugs !!!!!! 
+
 
 import json
 
 def save_products(products):
     with open("data/inventory.json","w") as file:
         json.dump(products,file)       
+
+
 def load_products():
     try:
         with open("data/inventory.json","r") as file:
@@ -15,3 +19,6 @@ def load_products():
         return []
     except json.JSONDecodeError:
         return []
+
+
+
