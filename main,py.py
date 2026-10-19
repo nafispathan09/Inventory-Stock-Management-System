@@ -1,9 +1,11 @@
-
+import inventory,storage,reports
 
 print("---------------------INVENTRY STOCK MANAGEMENT ----------------------")
-products=load_products()
+products=storage.load_products()
 
 # main menu 
+
+
 def product_management(products):
     while True:
 
@@ -17,28 +19,28 @@ def product_management(products):
                 print("Enter choice in int formate \ninvalid choice ")
 
         if choice==9:
-            with open ("inventy.json","w")as file:
-                json.dump(products)
             break 
 
 
         elif choice==1 :
-            add_product()
+            inventory.add_product(products)
         elif choice==2:
-            show_product(products)
+            inventory.show_product(products)
         elif choice==3:
-            search_product(products)
+            inventory.search_product(products)
         elif choice==4:
-            update_product(products)
+            inventory.update_product(products)
         elif choice==5:
-            delete_student(products)
+            inventory.delete_product(products)
         else:
             print("invalid choice please enter valid choice again ")
+
+
 def stock_managent():
     print("Welcomet to the stock management function !!!!!! ")
    
     while True :
-        print("1 for add stock \n2 for sale stock\n3 for show low stack report !!  7 for exit ")
+        print("1 for add stock \n2 for sale stock\n !!  7 for exit ")
         while True:
             try:
                 choice=int(input("enter your choice .......  "))
@@ -47,36 +49,38 @@ def stock_managent():
                 print("invalid input \ninput must be integer number !!!!! ")
         if choice==7:
             print("thanks for chosing us .. ")
+            break
 
-            with open ("inventy.json","w")as file:
-              json.dump(products)
-            break 
 
 
         elif choice==1:
-            add_stock(products)
+            inventory.add_stock(products)
         elif choice==2:
-            sell_product(products)
-        elif choice==3:
-            low_stock_report(products )
+            inventory.sell_product(products)
+       
+       
         else:
             print("enter valid input\nyour choice is not valid !!!!! ")
+
+
 def statistics_report():
     while True:
-        print("Enter 1 for inventry statistics \n2for inventry value \n3 for exit")
+        print("Enter 1 for inventry statistics \n2for inventry value \n3for low stock report\n4 for exit")
         while True:
             try:
                 choice=int(input("Enter your choice here :-  "))
                 break
             except ValueError:
                 print("Enter valid choice in integer formate !!! ")
-        if choice==3:
+        if choice==4:
             print("thanks for visiting !!!! ")
             break
         elif choice==1:
-            inventry_statistics(products)
+            reports.inventry_statistics(products)
         elif choice==2:
-            inventry_vlaue(products)
+            reports.inventry_vlaue(products)
+        elif choice==3:
+            reports.low_stock_report(products )
         else:
             print("invalid input try agin !!!! ")
             print()
@@ -106,17 +110,3 @@ while True:
 
     
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,7 @@
 # inventry 
 
+# overall bug free >>>> 
+
 import storage as file
 products=file.load_products()
 
@@ -165,7 +167,7 @@ def update_product(products):
 
     if found==False:
         print("Student not dound !!!!!!")
-def delete_student(products):
+def delete_product(products):
     print("welcome to the deleate product function ")
     found=False
     while True:
@@ -246,11 +248,6 @@ def add_stock(products):
            
         file.save_products(products)
         return
-
-
-
-
-
 
 
 
